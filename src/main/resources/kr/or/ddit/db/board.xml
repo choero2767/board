@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	
+	 <select id="selectBoardList" resultType="boardVo" parameterType="boardVo" >
+ 	 select * from board2 where boardAvailable = 1
+  </select>
+  
+  <select id="selectBoardListMake" resultType="boardVo">
+  	select * from board2
+  </select>
+  
+  <select id="getBoardName" resultType="String" parameterType="Integer">
+  	select boardName from board2 where boardCode = #{boardCode}
+  </select>
+  
+  <select id="getBoardCode" resultType="Integer">
+  	select nvl(max(boardcode), 0) from board2
+  </select>
+  
+  <insert id="insertBoard" parameterType="boardVo">
+  	insert into board2(boardcode, userid, boardname, boardDate, boardAvailable) 
+  	values(#{boardCode}, #{userId}, #{boardName}, sysdate, 1)
+  </insert>
+  
+  <update id="updateBoard" parameterType="boardVo">
+  	update board2 set boardname=#{boardName}, boardAvailable=#{boardAvailable}
+  	where boardcode=#{boardCode}
+  </update>
+
+</mapper>
